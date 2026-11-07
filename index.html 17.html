@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JOURA | Journey of Reflection and Achievement</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg: #f6f7f2;
+  --surface: #ffffff;
+  --surface2: #f0f3eb;
+  --green: #547b61;
+  --green-dark: #345b43;
+  --green-light: #e7f0e7;
+  --yellow: #e9bd68;
+  --yellow-light: #fbf2df;
+  --blue: #6b8ca5;
+  --blue-light: #eaf1f6;
+  --purple: #8c7da9;
+  --purple-light: #f0ecf6;
+  --text: #29382f;
+  --muted: #879189;
+  --border: #e7eae3;
+  --danger: #c87970;
+  --shadow: 0 8px 28px rgba(43,65,48,.055);
+  --radius: 18px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+button, input, textarea, select { font: inherit; }
+button { cursor: pointer; }
+.hidden { display: none !important; }
+
+/* APP LAYOUT */
+
+.app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 250px;
+  background: #fff;
+  border-right: 1px solid var(--border);
+  padding: 27px 17px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 50;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 0 10px 32px;
+}
+
+.brand-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--green);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-size: 23px;
+  font-weight: 800;
+  font-family: 'Plus Jakarta Sans';
+}
+
+.brand-name {
+  font-family: 'Plus Jakarta Sans';
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.brand-sub {
+  color: var(--muted);
+  font-size: 8px;
+  letter-spacing: .7px;
+  margin-top: 3px;
+}
+
+.nav-label {
+  padding: 0 12px;
+  color: #a1aaa2;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin: 12px 0 10px;
+}
+
+.nav-item {
+  width: 100%;
+  border: none;
+  background: transparent;
+  padding: 12px 13px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #77827a;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: 4px;
+  transition: .2s;
+}
+
+.nav-item:hover { background: var(--surface2); color: var(--green-dark); }
+
+.nav-item.active {
+  background: var(--green-light);
+  color: var(--green-dark);
+  font-weight: 800;
+}
+
+.nav-icon {
+  font-size: 18px;
+  width: 22px;
+  text-align: center;
+}
+
+.sidebar-bottom { margin-top: auto; }
+
+.student-mini {
+  background: var(--surface2);
+  border-radius: 15px;
+  padding: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.student-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  background: #dce9da;
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+}
+
+.student-mini strong { font-size: 12px; }
+.student-mini small { display: block; color: var(--muted); font-size: 10px; margin-top: 3px; }
+
+.main {
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  min-width: 0;
+}
+
+.topbar {
+  height: 76px;
+  background: rgba(255,255,255,.9);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 38px;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  backdrop-filter: blur(12px);
+}
+
+.breadcrumb { font-size: 13px; color: var(--muted); }
+.breadcrumb strong { color: var(--text); }
+
+.top-right { display: flex; align-items: center; gap: 13px; }
+
+.subject-select {
+  padding: 9px 13px;
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.content {
+  max-width: 1250px;
+  padding: 34px 38px 55px;
+  margin: auto;
+}
+
+.page { display: none; animation: appear .25s ease; }
+.page.active { display: block; }
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.page-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.eyebrow {
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-family: 'Plus Jakarta Sans';
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -.8px;
+}
+
+.subtitle {
+  color: var(--muted);
+  font-size: 13px;
+  margin-top: 7px;
+  line-height: 1.7;
+}
+
+.card {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 22px;
+}
+
+.card-title {
+  font-family: 'Plus Jakarta Sans';
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.card-description {
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-top: 5px;
+}
+
+.btn {
+  border: none;
+  border-radius: 10px;
+  padding: 11px 17px;
+  font-size: 12px;
+  font-weight: 800;
+  transition: .2s;
+}
+
+.btn-primary { background: var(--green); color: white; }
+.btn-primary:hover { background: var(--green-dark); transform: translateY(-1px); }
+.btn-light { background: var(--surface2); color: var(--green-dark); }
+.btn-outline { background: white; border: 1px solid var(--border); color: var(--text); }
+.btn-small { padding: 8px 12px; font-size: 11px; }
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border-radius: 7px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.tag-green { background: var(--green-light); color: var(--green-dark); }
+.tag-yellow { background: var(--yellow-light); color: #9c752d; }
+.tag-blue { background: var(--blue-light); color: #52738c; }
+.tag-purple { background: var(--purple-light); color: #776592; }
+.tag-gray { background: #f0f1ee; color: #778078; }
+
+input, textarea, select {
+  width: 100%;
+  padding: 12px 13px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  outline: none;
+  background: #fcfdfb;
+  color: var(--text);
+  font-size: 12px;
+  transition: .2s;
+}
+
+input:focus, textarea:focus, select:focus {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(84,123,97,.09);
+}
+
+textarea { resize: vertical; line-height: 1.7; }
+
+label {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  margin-bottom: 7px;
+}
+
+.form-group { margin-bottom: 17px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 17px; }
+.grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 17px; }
+
+/* DASHBOARD */
+
+.welcome-banner {
+  background: linear-gradient(110deg,#e7efe4,#f3f4e9 65%,#f8f0df);
+  border: 1px solid #e0e9dc;
+  border-radius: 22px;
+  padding: 29px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 23px;
+}
+
+.welcome-banner h1 { font-size: 25px; }
+.welcome-banner p { font-size: 12px; color: #66766a; margin-top: 8px; line-height: 1.7; }
+
+.welcome-art {
+  font-size: 66px;
+  padding: 5px 20px;
+  opacity: .85;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 15px;
+  margin-bottom: 23px;
+}
+
+.stat-card {
+  padding: 19px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+.stat-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+
+.stat-number {
+  font-family: 'Plus Jakarta Sans';
+  font-size: 25px;
+  font-weight: 800;
+}
+
+.stat-label { color: var(--muted); font-size: 11px; margin-top: 4px; }
+
+/* ADVENTURE MAP */
+
+.map-card {
+  padding: 24px;
+  margin-bottom: 22px;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.map-area {
+  position: relative;
+  min-height: 340px;
+  overflow: hidden;
+  border-radius: 17px;
+  background:
+    radial-gradient(ellipse at 12% 15%,#dce9cb 0 10%,transparent 11%),
+    radial-gradient(ellipse at 85% 80%,#d7e5c8 0 14%,transparent 15%),
+    radial-gradient(ellipse at 45% 70%,#e7ebd3 0 17%,transparent 18%),
+    linear-gradient(140deg,#edf1df,#dfead7 55%,#e8eddc);
+  border: 1px solid #e1e8d8;
+}
+
+.map-area:before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 80px;
+  top: 47%;
+  left: -20%;
+  transform: rotate(-12deg);
+  border-top: 25px solid rgba(255,255,255,.58);
+  border-bottom: 25px solid rgba(255,255,255,.35);
+  border-radius: 50%;
+}
+
+.map-area:after {
+  content: "✦     ·       ✦        ·       ✦       ·       ✦";
+  position: absolute;
+  top: 18px;
+  right: 25px;
+  color: #a5b99a;
+  font-size: 16px;
+  letter-spacing: 17px;
+  pointer-events: none;
+}
+
+.map-node {
+  position: absolute;
+  z-index: 2;
+  transform: translate(-50%,-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  border: none;
+  background: transparent;
+  transition: .25s;
+}
+
+.map-node:hover { transform: translate(-50%,-58%) scale(1.06); }
+
+.node-icon {
+  width: 55px;
+  height: 55px;
+  border: 3px solid white;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-size: 23px;
+  box-shadow: 0 5px 15px rgba(50,70,45,.15);
+  background: white;
+}
+
+.node-1 .node-icon { background: #e3efe0; }
+.node-2 .node-icon { background: #e6eef4; }
+.node-3 .node-icon { background: #f8eedb; }
+.node-4 .node-icon { background: #eee9f5; }
+.node-5 .node-icon { background: #f9edcf; }
+
+.node-label {
+  background: white;
+  border-radius: 8px;
+  padding: 6px 9px;
+  font-size: 10px;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 3px 10px rgba(40,60,40,.08);
+}
+
+.node-status {
+  font-size: 9px;
+  color: var(--green-dark);
+  font-weight: 800;
+}
+
+.map-1 { left: 11%; top: 65%; }
+.map-2 { left: 31%; top: 33%; }
+.map-3 { left: 51%; top: 65%; }
+.map-4 { left: 71%; top: 30%; }
+.map-5 { left: 90%; top: 62%; }
+
+.map-path {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 17px;
+  margin-top: 15px;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.dashboard-bottom {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 18px;
+}
+
+.activity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.activity-row:last-child { border: none; }
+.activity-icon {
+  width: 37px;
+  height: 37px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: var(--surface2);
+  font-size: 17px;
+  flex-shrink: 0;
+}
+
+.activity-row strong { font-size: 11px; }
+.activity-row small { display: block; font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+/* TASKS */
+
+.task-list { display: flex; flex-direction: column; gap: 11px; }
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 15px;
+  background: white;
+  transition: .2s;
+}
+
+.task-item:hover { border-color: #c4d6c4; }
+
+.task-file-icon {
+  width: 43px;
+  height: 43px;
+  border-radius: 12px;
+  background: var(--green-light);
+  display: grid;
+  place-items: center;
+  font-size: 19px;
+  flex-shrink: 0;
+}
+
+.task-info { flex: 1; min-width: 0; }
+.task-info strong { font-size: 12px; display: block; }
+.task-info small { font-size: 10px; color: var(--muted); display: block; margin-top: 5px; }
+.task-actions { display: flex; gap: 7px; align-items: center; }
+
+/* FEEDBACK */
+
+.feedback-layout {
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+
+.feedback-task {
+  border: 1px solid var(--border);
+  padding: 15px;
+  border-radius: 12px;
+  margin-top: 11px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.feedback-task:hover, .feedback-task.selected {
+  border-color: var(--green);
+  background: #f5f9f3;
+}
+
+.feedback-task strong { font-size: 11px; }
+.feedback-task small { display: block; color: var(--muted); font-size: 10px; margin-top: 5px; }
+
+.feedback-main { min-width: 0; }
+
+.feedback-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--border);
+}
+
+.comment-card {
+  background: #f7f9f5;
+  border: 1px solid #e7eee3;
+  padding: 15px;
+  border-radius: 13px;
+  margin-top: 13px;
+}
+
+.comment-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 11px;
+}
+
+.comment-author { display: flex; gap: 9px; align-items: center; }
+
+.comment-avatar {
+  width: 34px;
+  height: 34px;
+  background: #dce9df;
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  font-size: 17px;
+}
+
+.comment-author strong { font-size: 11px; }
+.comment-author small { display: block; color: var(--muted); font-size: 9px; margin-top: 3px; }
+
+.comment-target {
+  font-size: 10px;
+  font-weight: 800;
+  color: #53785b;
+  background: #e5efe3;
+  padding: 7px 10px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 9px;
+}
+
+.comment-text { font-size: 12px; line-height: 1.75; color: #59665d; }
+
+.student-reply {
+  background: white;
+  border: 1px solid var(--border);
+  padding: 12px;
+  border-radius: 11px;
+  margin: 10px 0 0 25px;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.teacher-reply {
+  background: var(--blue-light);
+  border: 1px solid #dce8ef;
+  padding: 12px;
+  border-radius: 11px;
+  margin: 10px 0 0 25px;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.comment-action {
+  border: none;
+  background: transparent;
+  color: var(--green);
+  font-size: 10px;
+  font-weight: 800;
+  margin-top: 12px;
+}
+
+.document-preview {
+  background: #fcfcfa;
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  padding: 20px;
+  margin-top: 17px;
+}
+
+.document-preview h4 { font-size: 13px; margin-bottom: 12px; }
+
+.document-text {
+  font-family: Georgia,serif;
+  font-size: 12px;
+  line-height: 2;
+  color: #616b63;
+}
+
+.highlighted {
+  background: #fff0c7;
+  border-bottom: 2px solid #e6b95f;
+  padding: 2px 3px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.document-instruction {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 12px;
+}
+
+/* CHAT */
+
+.chat-box {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px;
+  margin-top: 17px;
+}
+
+.chat-messages { max-height: 260px; overflow-y: auto; }
+
+.chat-message {
+  max-width: 85%;
+  padding: 11px 13px;
+  border-radius: 12px;
+  font-size: 11px;
+  line-height: 1.7;
+  margin-bottom: 10px;
+}
+
+.chat-message.teacher { background: var(--blue-light); }
+.chat-message.student { background: var(--green-light); margin-left: auto; }
+
+.chat-message small {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  margin-top: 5px;
+}
+
+.chat-input { display: flex; gap: 9px; margin-top: 13px; }
+.chat-input input { flex: 1; }
+
+/* REVISION */
+
+.comparison {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-top: 19px;
+}
+
+.comparison-panel {
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  overflow: hidden;
+}
+
+.comparison-title {
+  padding: 12px 15px;
+  background: #f2f4f0;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.comparison-panel:last-child .comparison-title { background: var(--green-light); }
+
+.comparison-body {
+  padding: 16px;
+  font-size: 12px;
+  line-height: 1.8;
+  min-height: 150px;
+  color: #667168;
+}
+
+.version-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid var(--border);
+  padding: 13px;
+  border-radius: 11px;
+  margin-top: 10px;
+  font-size: 11px;
+}
+
+/* REFLECTION */
+
+.reflection-question {
+  padding: 17px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.reflection-question:last-of-type { border: none; }
+.reflection-question label { font-size: 12px; margin-bottom: 10px; }
+
+/* JOURNEY */
+
+.journey-highlight {
+  background: linear-gradient(120deg,#edf3e9,#f8f4e9);
+  padding: 22px;
+  border-radius: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 19px;
+}
+
+.progress-track {
+  height: 8px;
+  background: #e9eee6;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-top: 12px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 20px;
+  transition: width .4s;
+}
+
+.score-chart {
+  width: 100%;
+  height: auto;
+  margin-top: 15px;
+}
+
+.score-legend {
+  display: flex;
+  gap: 15px;
+  font-size: 10px;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+
+.score-legend span:before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 6px;
+}
+
+.score-legend span:last-child:before { background: var(--yellow); }
+
+.achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(4,1fr);
+  gap: 13px;
+  margin-top: 17px;
+}
+
+.achievement {
+  padding: 19px 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-align: center;
+  background: white;
+}
+
+.achievement.locked { opacity: .4; background: #f5f6f3; }
+
+.achievement-icon {
+  font-size: 29px;
+  margin-bottom: 10px;
+}
+
+.achievement strong { display: block; font-size: 10px; }
+.achievement small { display: block; color: var(--muted); font-size: 9px; margin-top: 5px; }
+
+/* MODAL */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(34,48,37,.4);
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-backdrop.show { display: flex; }
+
+.modal {
+  background: white;
+  width: 100%;
+  max-width: 550px;
+  border-radius: 19px;
+  padding: 25px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 70px rgba(0,0,0,.16);
+}
+
+.modal-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.modal-head h3 { font-family: 'Plus Jakarta Sans'; font-size: 17px; }
+
+.close-modal {
+  border: none;
+  background: var(--surface2);
+  border-radius: 9px;
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+}
+
+/* TOAST */
+
+.toast {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  background: #345b43;
+  color: white;
+  padding: 13px 19px;
+  border-radius: 11px;
+  font-size: 12px;
+  font-weight: 700;
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: .25s;
+  pointer-events: none;
+}
+
+.toast.show { opacity: 1; transform: translateY(0); }
+
+footer {
+  padding: 25px;
+  text-align: center;
+  color: #9aa39b;
+  font-size: 10px;
+  border-top: 1px solid var(--border);
+  margin-top: 35px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px) {
+  .sidebar { width: 210px; }
+  .main { margin-left: 210px; width: calc(100% - 210px); }
+  .content { padding: 27px 23px; }
+  .stats-grid { grid-template-columns: repeat(2,1fr); }
+  .feedback-layout { grid-template-columns: 1fr; }
+}
+
+@media(max-width:700px) {
+  .sidebar {
+    width: 100%;
+    height: 67px;
+    inset: auto 0 0 0;
+    padding: 5px 7px;
+    border-right: none;
+    border-top: 1px solid var(--border);
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .brand,.nav-label,.sidebar-bottom { display: none; }
+  .nav-group { display: contents; }
+  .nav-item {
+    width: auto;
+    flex: 1;
+    flex-direction: column;
+    gap: 3px;
+    justify-content: center;
+    padding: 7px 2px;
+    margin: 0;
+    font-size: 9px;
+  }
+  .nav-icon { font-size: 17px; }
+  .main { margin: 0; width: 100%; padding-bottom: 65px; }
+  .topbar { height: 62px; padding: 0 16px; }
+  .content { padding: 22px 15px; }
+  .welcome-banner { padding: 21px; }
+  .welcome-art { font-size: 43px; padding: 0; }
+  h1 { font-size: 21px; }
+  .welcome-banner h1 { font-size: 20px; }
+  .stats-grid { gap: 9px; }
+  .stat-card { padding: 14px; }
+  .stat-number { font-size: 21px; }
+  .dashboard-bottom,.grid-2,.grid-3 { grid-template-columns: 1fr; }
+  .map-area { min-height: 310px; }
+  .node-icon { width: 43px; height: 43px; font-size: 18px; border-radius: 14px; }
+  .node-label { font-size: 8px; padding: 5px 6px; }
+  .map-1 { left: 12%; top: 65%; }
+  .map-2 { left: 32%; top: 30%; }
+  .map-3 { left: 51%; top: 65%; }
+  .map-4 { left: 70%; top: 29%; }
+  .map-5 { left: 89%; top: 65%; }
+  .comparison { grid-template-columns: 1fr; }
+  .achievement-grid { grid-template-columns: repeat(2,1fr); }
+  .page-heading { align-items: flex-start; flex-direction: column; }
+  .task-item { flex-wrap: wrap; }
+  .task-actions { width: 100%; justify-content: flex-end; }
+  .top-right .subject-select { max-width: 125px; }
+  footer { margin-bottom: 10px; }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-icon">J</div>
+    <div>
+      <div class="brand-name">JOURA</div>
+      <div class="brand-sub">JOURNEY OF REFLECTION & ACHIEVEMENT</div>
+    </div>
+  </div>
+
+  <div class="nav-label">MAIN MENU</div>
+
+  <div class="nav-group">
+    <button class="nav-item active" data-page="home" onclick="navigate('home',this)">
+      <span class="nav-icon">⌂</span> Dashboard
+    </button>
+    <button class="nav-item" data-page="submit" onclick="navigate('submit',this)">
+      <span class="nav-icon">↥</span> Submit Work
+    </button>
+    <button class="nav-item" data-page="feedback" onclick="navigate('feedback',this)">
+      <span class="nav-icon">▤</span> Get Feedback
+    </button>
+    <button class="nav-item" data-page="revision" onclick="navigate('revision',this)">
+      <span class="nav-icon">↻</span> Revision
+    </button>
+    <button class="nav-item" data-page="reflection" onclick="navigate('reflection',this)">
+      <span class="nav-icon">✎</span> Reflection
+    </button>
+    <button class="nav-item" data-page="journey" onclick="navigate('journey',this)">
+      <span class="nav-icon">⌁</span> My Journey
+    </button>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="student-mini">
+      <div class="student-avatar">🧑🏻‍🎓</div>
+      <div>
+        <strong>Student Explorer</strong>
+        <small>Learning Journey</small>
+      </div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+
+<header class="topbar">
+  <div class="breadcrumb">JOURA / <strong id="breadcrumbName">Dashboard</strong></div>
+  <div class="top-right">
+    <select class="subject-select" id="subjectSelect">
+      <option>English</option>
+      <option>Mathematics</option>
+      <option>History</option>
+      <option>Science</option>
+    </select>
+    <div class="student-avatar">🧑🏻‍🎓</div>
+  </div>
+</header>
+
+<main class="content">
+
+<!-- ================= DASHBOARD ================= -->
+
+<section class="page active" id="page-home">
+
+  <div class="welcome-banner">
+    <div>
+      <div class="eyebrow">YOUR LEARNING JOURNEY</div>
+      <h1>Every step makes progress.</h1>
+      <p>Learning is a continuous journey. Keep your work,<br>
+      receive feedback, improve, and celebrate your growth.</p>
+    </div>
+    <div class="welcome-art">🌿</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#e7f0e7">📁</div>
+      <div class="stat-number" id="statTasks">1</div>
+      <div class="stat-label">Submitted Works</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#eaf1f6">💬</div>
+      <div class="stat-number" id="statFeedback">2</div>
+      <div class="stat-label">Feedback Received</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#fbf2df">↗</div>
+      <div class="stat-number" id="statRevision">1</div>
+      <div class="stat-label">Completed Revisions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#f0ecf6">✎</div>
+      <div class="stat-number" id="statReflection">0</div>
+      <div class="stat-label">Saved Reflections</div>
+    </div>
+  </div>
+
+  <div class="card map-card">
+    <div class="map-header">
+      <div>
+        <div class="eyebrow">EXPLORE YOUR LEARNING</div>
+        <div class="card-title">Your Learning Path</div>
+        <p class="card-description">Follow each stage of your learning journey.</p>
+      </div>
+      <span class="tag tag-green">5 Learning Stages</span>
+    </div>
+
+    <div class="map-area">
+      <svg class="map-path" viewBox="0 0 1000 340" preserveAspectRatio="none">
+        <path d="M110 220 Q210 65 310 105 T510 220 T710 95 T900 215"
+          stroke="white" stroke-width="8" fill="none"
+          stroke-linecap="round" stroke-dasharray="5 13"/>
+        <path d="M110 220 Q210 65 310 105 T510 220 T710 95 T900 215"
+          stroke="#9bb99a" stroke-width="3" fill="none"
+          stroke-linecap="round" stroke-dasharray="5 13"/>
+      </svg>
+
+      <button class="map-node map-1 node-1" onclick="navigate('submit')">
+        <span class="node-icon">📂</span>
+        <span class="node-label">SUBMIT WORK</span>
+        <span class="node-status">01 · Start</span>
+      </button>
+
+      <button class="map-node map-2 node-2" onclick="navigate('feedback')">
+        <span class="node-icon">💬</span>
+        <span class="node-label">GET FEEDBACK</span>
+        <span class="node-status">02 · Feedback</span>
+      </button>
+
+      <button class="map-node map-3 node-3" onclick="navigate('revision')">
+        <span class="node-icon">📝</span>
+        <span class="node-label">REVISION</span>
+        <span class="node-status">03 · Improve</span>
+      </button>
+
+      <button class="map-node map-4 node-4" onclick="navigate('reflection')">
+        <span class="node-icon">✍️</span>
+        <span class="node-label">REFLECTION</span>
+        <span class="node-status">04 · Reflect</span>
+      </button>
+
+      <button class="map-node map-5 node-5" onclick="navigate('journey')">
+        <span class="node-icon">🏆</span>
+        <span class="node-label">MY JOURNEY</span>
+        <span class="node-status">05 · Achievement</span>
+      </button>
+    </div>
+
+    <div class="map-legend">
+      <span><i class="legend-dot" style="background:#547b61"></i> Learning stages</span>
+      <span><i class="legend-dot" style="background:#e9bd68"></i> Achievement</span>
+      <span>Click a location to explore its feature.</span>
+    </div>
+  </div>
+
+  <div class="dashboard-bottom">
+    <div class="card">
+      <div class="card-title">Recent Activities</div>
+      <p class="card-description">A record of your latest learning activities.</p>
+      <div id="recentActivities"></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Continue Your Journey</div>
+      <p class="card-description">Pick up where you left off.</p>
+
+      <div class="activity-row">
+        <div class="activity-icon">💬</div>
+        <div style="flex:1">
+          <strong>Review your feedback</strong>
+          <small>Check comments from your teacher.</small>
+        </div>
+        <button class="btn btn-light btn-small" onclick="navigate('feedback')">Open</button>
+      </div>
+
+      <div class="activity-row">
+        <div class="activity-icon">📝</div>
+        <div style="flex:1">
+          <strong>Improve your work</strong>
+          <small>Continue working on your revision.</small>
+        </div>
+        <button class="btn btn-light btn-small" onclick="navigate('revision')">Open</button>
+      </div>
+
+      <div class="activity-row">
+        <div class="activity-icon">🏆</div>
+        <div style="flex:1">
+          <strong>View your achievements</strong>
+          <small>See how far you have progressed.</small>
+        </div>
+        <button class="btn btn-light btn-small" onclick="navigate('journey')">Open</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SUBMIT WORK ================= -->
+
+<section class="page" id="page-submit">
+
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">LEARNING STAGE 01</div>
+      <h1>Submit Work</h1>
+      <p class="subtitle">Upload and organize your assignments in one place.<br>
+      Every submission becomes part of your learning record.</p>
+    </div>
+    <button class="btn btn-primary" onclick="openTaskModal()">+ Add New Work</button>
+  </div>
+
+  <div class="grid-2" style="margin-bottom:20px">
+    <div class="card">
+      <div class="stat-label">TOTAL SUBMISSIONS</div>
+      <div class="stat-number" id="submitCount">1</div>
+    </div>
+    <div class="card">
+      <div class="stat-label">LATEST SUBMISSION</div>
+      <div style="font-size:14px;font-weight:800;margin-top:7px" id="latestSubmission">Analytical Exposition Text</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">My Submitted Works</div>
+    <p class="card-description">Your assignments are organized chronologically.</p>
+
+    <div class="task-list" id="taskList" style="margin-top:18px"></div>
+  </div>
+</section>
+
+<!-- ================= GET FEEDBACK ================= -->
+
+<section class="page" id="page-feedback">
+
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">LEARNING STAGE 02</div>
+      <h1>Get Feedback</h1>
+      <p class="subtitle">Receive comments, discuss suggestions, and understand<br>
+      which parts of your work need improvement.</p>
+    </div>
+  </div>
+
+  <div class="feedback-layout">
+
+    <div class="card">
+      <div class="card-title">My Assignments</div>
+      <p class="card-description">Select an assignment to view its feedback.</p>
+      <div id="feedbackTaskList"></div>
+    </div>
+
+    <div class="card feedback-main">
+      <div id="feedbackDetail">
+        <div class="feedback-meta">
+          <div>
+            <div class="eyebrow">SELECTED ASSIGNMENT</div>
+            <div class="card-title">Analytical Exposition Text</div>
+          </div>
+          <span class="tag tag-yellow">Needs Revision</span>
+        </div>
+
+        <div class="document-preview">
+          <h4>Assignment Preview</h4>
+          <div class="document-text">
+            <p><strong>Why Students Should Read More Books</strong></p>
+            <br>
+            Reading books is an important activity for students. It can improve their knowledge and vocabulary.
+            <br><br>
+            <span class="highlighted">I believe that students should read more books because it can improve their knowledge and develop their critical thinking skills.</span>
+            <br><br>
+            First, reading provides students with new information. Second, it helps students understand different perspectives.
+            <br><br>
+            In conclusion, reading books gives many benefits to students.
+          </div>
+          <p class="document-instruction">Highlighted text indicates the section discussed in the teacher's feedback.</p>
+        </div>
+
+        <div style="margin-top:20px">
+          <div class="card-title">Teacher's Comments</div>
+          <p class="card-description">Feedback is connected to the specific section of your assignment.</p>
+
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-author">
+                <div class="comment-avatar">👩🏻‍🏫</div>
+                <div>
+                  <strong>Teacher</strong>
+                  <small>English Teacher · Example feedback</small>
+                </div>
+              </div>
+              <span class="tag tag-yellow">Revision Needed</span>
+            </div>
+            <div class="comment-target">📍 Target: Thesis Statement</div>
+            <p class="comment-text">
+              Your position is clear. However, try to make your thesis statement more specific by explaining the main reasons that support your argument.
+            </p>
+            <button class="comment-action" onclick="showTarget()">View highlighted section ↗</button>
+          </div>
+
+          <div class="comment-card">
+            <div class="comment-head">
+              <div class="comment-author">
+                <div class="comment-avatar">👩🏻‍🏫</div>
+                <div>
+                  <strong>Teacher</strong>
+                  <small>English Teacher · Example feedback</small>
+                </div>
+              </div>
+              <span class="tag tag-green">Suggestion</span>
+            </div>
+            <div class="comment-target">📍 Target: Supporting Arguments</div>
+            <p class="comment-text">
+              Good supporting ideas. You can strengthen this paragraph by adding examples or evidence to support your arguments.
+            </p>
+          </div>
+        </div>
+
+        <div class="chat-box">
+          <div class="card-title">Feedback Discussion</div>
+          <p class="card-description">Discuss the comments directly with your teacher.</p>
+
+          <div class="chat-messages" id="chatMessages">
+            <div class="chat-message teacher">
+              Thank you for submitting your work. Please review the comments and improve the thesis statement.
+              <small>Teacher · Yesterday</small>
+            </div>
+            <div class="chat-message student">
+              Thank you, Ma'am. I will revise the thesis statement and add stronger supporting arguments.
+              <small>You · Yesterday</small>
+            </div>
+          </div>
+
+          <div class="chat-input">
+            <input id="replyInput" placeholder="Write your response..." onkeydown="if(event.key==='Enter')sendReply()">
+            <button class="btn btn-primary" onclick="sendReply()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REVISION ================= -->
+
+<section class="page" id="page-revision">
+
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">LEARNING STAGE 03</div>
+      <h1>Revision</h1>
+      <p class="subtitle">Improve your assignments based on the feedback<br>
+      you have received from your teacher.</p>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:19px">
+    <div class="card-title">Submit Your Revised Work</div>
+    <p class="card-description">Select the assignment you want to revise and upload its updated version.</p>
+
+    <div class="grid-2" style="margin-top:19px">
+      <div class="form-group">
+        <label>Related Assignment</label>
+        <select id="revisionTaskSelect"></select>
+      </div>
+      <div class="form-group">
+        <label>Upload Revised File</label>
+        <input type="file" id="revisionFile" accept=".pdf,.doc,.docx,.ppt,.pptx,.jpg,.png,.mp4">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>What did you improve?</label>
+      <textarea id="revisionNote" rows="3" placeholder="Describe the changes you made based on your teacher's feedback..."></textarea>
+    </div>
+
+    <div class="grid-2">
+      <div class="form-group">
+        <label>Previous Score (if assessed)</label>
+        <input type="number" id="oldScore" min="0" max="100" placeholder="Example: 65">
+      </div>
+      <div class="form-group">
+        <label>Revised Score (if assessed)</label>
+        <input type="number" id="newScore" min="0" max="100" placeholder="Example: 85">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" onclick="saveRevision()">Save Revised Work</button>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Assignment Development</div>
+    <p class="card-description">Compare your original submission with the latest revision.</p>
+
+    <div class="comparison">
+      <div class="comparison-panel">
+        <div class="comparison-title">📄 ORIGINAL SUBMISSION</div>
+        <div class="comparison-body" id="originalText">
+          Original version of your assignment will appear here.
+          <br><br>
+          Your initial ideas and work are preserved as the starting point of your development.
+        </div>
+      </div>
+      <div class="comparison-panel">
+        <div class="comparison-title">✓ REVISED SUBMISSION</div>
+        <div class="comparison-body" id="revisedText">
+          Your updated version will appear here after submitting a revision.
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px">
+      <div class="card-title">Revision History</div>
+      <div id="revisionHistory"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= REFLECTION ================= -->
+
+<section class="page" id="page-reflection">
+
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">LEARNING STAGE 04</div>
+      <h1>Reflection</h1>
+      <p class="subtitle">Think about your learning experiences, challenges,<br>
+      and the improvements you have made.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">My Learning Reflection</div>
+    <p class="card-description">Complete these questions to document your learning experience.</p>
+
+    <form id="reflectionForm" onsubmit="saveReflection(event)" style="margin-top:18px">
+
+      <div class="form-group">
+        <label>1. What did you learn from completing this assignment?</label>
+        <textarea id="reflection1" rows="3" required placeholder="Describe what you have learned..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>2. What difficulties did you experience while completing the assignment?</label>
+        <textarea id="reflection2" rows="3" required placeholder="Describe the challenges you faced..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>3. Which parts of your work still need improvement?</label>
+        <textarea id="reflection3" rows="3" required placeholder="Identify the areas that need improvement..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>4. How did your teacher's feedback help you improve your work?</label>
+        <textarea id="reflection4" rows="3" required placeholder="Explain how feedback helped you..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>5. What will you do differently in your next assignment?</label>
+        <textarea id="reflection5" rows="3" required placeholder="Describe your future learning strategies..."></textarea>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Save Reflection</button>
+    </form>
+  </div>
+
+  <div class="card" style="margin-top:19px">
+    <div class="card-title">My Reflection History</div>
+    <p class="card-description">Previously saved reflections can be reviewed here.</p>
+    <div id="reflectionHistory"></div>
+  </div>
+</section>
+
+<!-- ================= MY JOURNEY ================= -->
+
+<section class="page" id="page-journey">
+
+  <div class="page-heading">
+    <div>
+      <div class="eyebrow">YOUR LEARNING DEVELOPMENT</div>
+      <h1>My Journey</h1>
+      <p class="subtitle">Look back at your learning process and recognize<br>
+      the progress you have made along the way.</p>
+    </div>
+  </div>
+
+  <div class="journey-highlight">
+    <div style="flex:1">
+      <div class="eyebrow">YOUR LEARNING RECORD</div>
+      <div class="card-title" style="font-size:18px">Every effort counts.</div>
+      <p class="card-description">Your learning progress is reflected through your submissions, feedback, revisions, and reflections.</p>
+      <div class="progress-track">
+        <div class="progress-fill" id="overallProgress" style="width:20%"></div>
+      </div>
+      <small id="progressText" style="display:block;margin-top:7px;color:var(--muted);font-size:10px">1 of 5 learning stages completed</small>
+    </div>
+    <div style="font-size:46px">🌱</div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#e7f0e7">📂</div>
+      <div class="stat-number" id="journeyTasks">1</div>
+      <div class="stat-label">Works Submitted</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#eaf1f6">💬</div>
+      <div class="stat-number" id="journeyComments">2</div>
+      <div class="stat-label">Feedback Comments</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#fbf2df">↗</div>
+      <div class="stat-number" id="journeyRevisions">1</div>
+      <div class="stat-label">Revisions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon" style="background:#f0ecf6">✎</div>
+      <div class="stat-number" id="journeyReflections">0</div>
+      <div class="stat-label">Reflections</div>
+    </div>
+  </div>
+
+  <!-- SCORE DEVELOPMENT -->
+
+  <div class="card" style="margin-bottom:19px">
+    <div class="card-title">Revision Improvement</div>
+    <p class="card-description">
+      Compare your assessment results before and after revision to see how feedback contributes to improvement.
+    </p>
+
+    <div id="scoreComparison" style="margin-top:20px"></div>
+
+    <div class="score-legend" style="margin-top:20px">
+      <span>Original Score</span>
+      <span>Revised Score</span>
+    </div>
+
+    <svg class="score-chart" id="scoreChart" viewBox="0 0 700 210" role="img" aria-label="Score improvement chart">
+      <text x="20" y="35" fill="#879189" font-size="11">Score comparison will appear here.</text>
+    </svg>
+  </div>
+
+  <!-- ACHIEVEMENT -->
+
+  <div class="card">
+    <div class="card-title">Learning Achievements</div>
+    <p class="card-description">
+      Achievements are unlocked as you complete different learning activities.
+    </p>
+
+    <div class="achievement-grid" id="achievementGrid"></div>
+  </div>
+
+  <div class="card" style="margin-top:19px">
+    <div class="card-title">Learning Activity Timeline</div>
+    <p class="card-description">A chronological overview of your learning activities.</p>
+    <div id="journeyTimeline" style="margin-top:15px"></div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  © 2026 JOURA · Journey of Reflection and Achievement
+  <br><br>
+  Learn · Reflect · Achieve
+</footer>
+</div>
+</div>
+
+<!-- ADD TASK MODAL -->
+
+<div class="modal-backdrop" id="taskModal">
+  <div class="modal">
+    <div class="modal-head">
+      <h3>Add New Assignment</h3>
+      <button class="close-modal" onclick="closeTaskModal()">×</button>
+    </div>
+
+    <form onsubmit="saveTask(event)">
+      <div class="form-group">
+        <label>Assignment Title</label>
+        <input id="taskTitle" required placeholder="Example: Descriptive Text">
+      </div>
+
+      <div class="form-group">
+        <label>Assignment Description</label>
+        <textarea id="taskDescription" rows="3" placeholder="Write a short description..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Assignment Type</label>
+        <select id="taskType">
+          <option>Document</option>
+          <option>Presentation</option>
+          <option>Video</option>
+          <option>Audio</option>
+          <option>Image</option>
+          <option>Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Upload Assignment</label>
+        <input type="file" id="taskFile" required>
+      </div>
+
+      <button class="btn btn-primary" type="submit">Submit Assignment</button>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+
+/* ===================================
+   DATA AND LOCAL STORAGE
+=================================== */
+
+const STORAGE_KEY = "joura_platform_v2";
+
+const defaultData = {
+  tasks: [
+    {
+      id: 1,
+      title: "Analytical Exposition Text",
+      description: "Write an analytical exposition about the importance of reading.",
+      type: "Document",
+      file: "analytical-exposition.pdf",
+      date: "2026-11-06",
+      status: "Feedback Received",
+      comments: 2,
+      originalText: "I believe that students should read more books because it can improve their knowledge and develop their critical thinking skills.",
+      revisedText: "",
+      revisions: []
+    }
+  ],
+  revisions: [
+    {
+      taskId: 1,
+      date: "2026-11-06",
+      note: "Example revision: improved the thesis statement and added supporting evidence.",
+      file: "revised-analytical-exposition.pdf",
+      oldScore: 65,
+      newScore: 85
+    }
+  ],
+  reflections: [],
+  activities: [
+    {title:"Assignment submitted",detail:"Analytical Exposition Text",icon:"📂",date:"Nov 6, 2026"},
+    {title:"Teacher feedback received",detail:"2 comments on your assignment",icon:"💬",date:"Nov 6, 2026"},
+    {title:"Revision completed",detail:"Analytical Exposition Text",icon:"📝",date:"Nov 6, 2026"}
+  ]
+};
+
+let data;
+
+try {
+  const saved = localStorage.getItem(STORAGE_KEY);
+  data = saved ? JSON.parse(saved) : structuredClone(defaultData);
+} catch(e) {
+  data = JSON.parse(JSON.stringify(defaultData));
+}
+
+function saveData() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+let selectedFeedbackTask = 1;
+
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g, c => ({
+    "&":"&amp;", "<":"&lt;", ">":"&gt;",
+    '"':"&quot;", "'":"&#39;"
+  })[c]);
+}
+
+function toast(message) {
+  const el = document.getElementById("toast");
+  el.textContent = message;
+  el.classList.add("show");
+  setTimeout(()=>el.classList.remove("show"),2500);
+}
+
+function addActivity(title,detail,icon) {
+  data.activities.unshift({
+    title,detail,icon,
+    date:new Date().toLocaleDateString("id-ID",{
+      day:"numeric",month:"short",year:"numeric"
+    })
+  });
+  saveData();
+}
+
+/* ===================================
+   NAVIGATION
+=================================== */
+
+function navigate(page,button) {
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.getElementById("page-"+page).classList.add("active");
+
+  document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+
+  const nav = document.querySelector(`[data-page="${page}"]`);
+  if(nav) nav.classList.add("active");
+
+  const names = {
+    home:"Dashboard",
+    submit:"Submit Work",
+    feedback:"Get Feedback",
+    revision:"Revision",
+    reflection:"Reflection",
+    journey:"My Journey"
+  };
+
+  document.getElementById("breadcrumbName").textContent = names[page];
+
+  if(page==="home") renderDashboard();
+  if(page==="submit") renderTasks();
+  if(page==="feedback") renderFeedback();
+  if(page==="revision") renderRevision();
+  if(page==="reflection") renderReflections();
+  if(page==="journey") renderJourney();
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+/* ===================================
+   DASHBOARD
+=================================== */
+
+function renderDashboard() {
+  document.getElementById("statTasks").textContent = data.tasks.length;
+  document.getElementById("statFeedback").textContent =
+    data.tasks.reduce((sum,t)=>sum+(t.comments||0),0);
+  document.getElementById("statRevision").textContent = data.revisions.length;
+  document.getElementById("statReflection").textContent = data.reflections.length;
+
+  const activities = document.getElementById("recentActivities");
+
+  activities.innerHTML = data.activities.slice(0,4).map(a=>`
+    <div class="activity-row">
+      <div class="activity-icon">${escapeHTML(a.icon)}</div>
+      <div style="flex:1">
+        <strong>${escapeHTML(a.title)}</strong>
+        <small>${escapeHTML(a.detail)} · ${escapeHTML(a.date)}</small>
+      </div>
+    </div>
+  `).join("") || "<p class='card-description'>No activities yet.</p>";
+}
+
+/* ===================================
+   SUBMIT WORK
+=================================== */
+
+function openTaskModal() {
+  document.getElementById("taskModal").classList.add("show");
+}
+
+function closeTaskModal() {
+  document.getElementById("taskModal").classList.remove("show");
+}
+
+function saveTask(e) {
+  e.preventDefault();
+
+  const file = document.getElementById("taskFile").files[0];
+  if(!file) return;
+
+  const task = {
+    id:Date.now(),
+    title:document.getElementById("taskTitle").value.trim(),
+    description:document.getElementById("taskDescription").value.trim(),
+    type:document.getElementById("taskType").value,
+    file:file.name,
+    date:new Date().toISOString().slice(0,10),
+    status:"Submitted",
+    comments:0,
+    originalText:"",
+    revisedText:"",
+    revisions:[]
+  };
+
+  data.tasks.unshift(task);
+  addActivity("Assignment submitted",task.title,"📂");
+  saveData();
+
+  e.target.reset();
+  closeTaskModal();
+  renderTasks();
+  toast("Your assignment has been submitted!");
+}
+
+function renderTasks() {
+  document.getElementById("submitCount").textContent=data.tasks.length;
+
+  document.getElementById("latestSubmission").textContent =
+    data.tasks[0]?.title || "No submission yet";
+
+  document.getElementById("taskList").innerHTML =
+    data.tasks.map(t=>`
+      <div class="task-item">
+        <div class="task-file-icon">📄</div>
+        <div class="task-info">
+          <strong>${escapeHTML(t.title)}</strong>
+          <small>${escapeHTML(t.file)} · ${escapeHTML(t.date)}</small>
+          <small>${escapeHTML(t.description || t.type)}</small>
+        </div>
+        <div class="task-actions">
+          <span class="tag ${t.status==="Feedback Received"?"tag-yellow":"tag-green"}">${escapeHTML(t.status)}</span>
+          <button class="btn btn-light btn-small" onclick="openTaskFeedback(${t.id})">Feedback</button>
+        </div>
+      </div>
+    `).join("") || "<p class='card-description'>You have not submitted any assignments yet.</p>";
+}
+
+function openTaskFeedback(id) {
+  selectedFeedbackTask=id;
+  navigate("feedback");
+}
+
+/* ===================================
+   FEEDBACK
+=================================== */
+
+function renderFeedback() {
+  const list = document.getElementById("feedbackTaskList");
+
+  list.innerHTML=data.tasks.map(t=>`
+    <div class="feedback-task ${t.id===selectedFeedbackTask?"selected":""}"
+         onclick="selectFeedback(${t.id})">
+      <strong>${escapeHTML(t.title)}</strong>
+      <small>${escapeHTML(t.date)} · ${t.comments||0} comments</small>
+      <div style="margin-top:8px">
+        <span class="tag tag-yellow">${escapeHTML(t.status)}</span>
+      </div>
+    </div>
+  `).join("") || "<p class='card-description'>No assignments available.</p>";
+
+  if(!data.tasks.some(t=>t.id===selectedFeedbackTask)) {
+    selectedFeedbackTask=data.tasks[0]?.id;
+  }
+}
+
+function selectFeedback(id) {
+  selectedFeedbackTask=id;
+  renderFeedback();
+}
+
+function showTarget() {
+  const target=document.querySelector(".document-preview");
+  target.scrollIntoView({behavior:"smooth",block:"center"});
+  target.style.borderColor="#e6b95f";
+  setTimeout(()=>target.style.borderColor="",1800);
+}
+
+function sendReply() {
+  const input=document.getElementById("replyInput");
+  const message=input.value.trim();
+  if(!message) return;
+
+  const chat=document.getElementById("chatMessages");
+  const bubble=document.createElement("div");
+  bubble.className="chat-message student";
+  bubble.textContent=message;
+
+  const time=document.createElement("small");
+  time.textContent="You · Just now";
+  bubble.appendChild(time);
+
+  chat.appendChild(bubble);
+  input.value="";
+  chat.scrollTop=chat.scrollHeight;
+
+  toast("Your message has been added to this demo conversation.");
+}
+
+/* ===================================
+   REVISION
+=================================== */
+
+function renderRevision() {
+  const select=document.getElementById("revisionTaskSelect");
+  const current=select.value;
+
+  select.innerHTML=data.tasks.map(t=>`
+    <option value="${t.id}">${escapeHTML(t.title)}</option>
+  `).join("");
+
+  if(data.tasks.some(t=>String(t.id)===current)) select.value=current;
+
+  select.onchange=updateComparison;
+
+  updateComparison();
+  renderRevisionHistory();
+}
+
+function updateComparison() {
+  const id=Number(document.getElementById("revisionTaskSelect").value);
+  const task=data.tasks.find(t=>t.id===id);
+
+  if(!task) return;
+
+  document.getElementById("originalText").textContent =
+    task.originalText || task.description || "Original submission: "+task.file;
+
+  const revisions=data.revisions.filter(r=>r.taskId===id);
+  const latest=revisions[revisions.length-1];
+
+  document.getElementById("revisedText").textContent =
+    latest
+      ? latest.note+" (File: "+latest.file+")"
+      : "No revision has been submitted yet.";
+}
+
+function saveRevision() {
+  const id=Number(document.getElementById("revisionTaskSelect").value);
+  const task=data.tasks.find(t=>t.id===id);
+  const file=document.getElementById("revisionFile").files[0];
+  const note=document.getElementById("revisionNote").value.trim();
+
+  if(!task) return toast("Please select an assignment.");
+  if(!file) return toast("Please upload your revised file.");
+  if(!note) return toast("Please describe your revision.");
+
+  const oldValue=document.getElementById("oldScore").value;
+  const newValue=document.getElementById("newScore").value;
+
+  const oldScore=oldValue===""?null:Number(oldValue);
+  const newScore=newValue===""?null:Number(newValue);
+
+  if((oldScore!==null && (oldScore<0||oldScore>100)) ||
+     (newScore!==null && (newScore<0||newScore>100))) {
+    return toast("Scores must be between 0 and 100.");
+  }
+
+  if((oldScore===null)!==(newScore===null)) {
+    return toast("Enter both scores or leave both empty.");
+  }
+
+  const revision={
+    taskId:id,
+    date:new Date().toISOString().slice(0,10),
+    note,
+    file:file.name,
+    oldScore,
+    newScore
+  };
+
+  data.revisions.push(revision);
+  task.status="Revised";
+
+  addActivity("Revision submitted",task.title,"📝");
+  saveData();
+
+  document.getElementById("revisionNote").value="";
+  document.getElementById("revisionFile").value="";
+  document.getElementById("oldScore").value="";
+  document.getElementById("newScore").value="";
+
+  renderRevision();
+  toast("Your revised work has been saved!");
+}
+
+function renderRevisionHistory() {
+  const history=document.getElementById("revisionHistory");
+
+  const revisions=data.revisions.slice().reverse();
+
+  history.innerHTML=revisions.map(r=>{
+    const task=data.tasks.find(t=>t.id===r.taskId);
+    return `
+      <div class="version-item">
+        <div>
+          <strong>${escapeHTML(task?.title||"Assignment")}</strong>
+          <div style="color:var(--muted);margin-top:5px">
+            ${escapeHTML(r.file)} · ${escapeHTML(r.date)}
+          </div>
+          <div style="margin-top:6px;color:#667168">${escapeHTML(r.note)}</div>
+        </div>
+        <span class="tag tag-green">Saved</span>
+      </div>
+    `;
+  }).join("") || "<p class='card-description' style='margin-top:12px'>No revisions submitted yet.</p>";
+}
+
+/* ===================================
+   REFLECTION
+=================================== */
+
+function saveReflection(e) {
+  e.preventDefault();
+
+  const answers=[1,2,3,4,5].map(i=>
+    document.getElementById("reflection"+i).value.trim()
+  );
+
+  const reflection={
+    id:Date.now(),
+    date:new Date().toISOString().slice(0,10),
+    answers
+  };
+
+  data.reflections.unshift(reflection);
+
+  addActivity("Reflection saved","Learning reflection completed","✍️");
+  saveData();
+
+  e.target.reset();
+  renderReflections();
+  toast("Your reflection has been saved!");
+}
+
+function renderReflections() {
+  const history=document.getElementById("reflectionHistory");
+
+  history.innerHTML=data.reflections.map((r,index)=>`
+    <div class="version-item">
+      <div>
+        <strong>Reflection ${data.reflections.length-index}</strong>
+        <div style="color:var(--muted);margin-top:5px">${escapeHTML(r.date)}</div>
+      </div>
+      <button class="btn btn-light btn-small" onclick="viewReflection(${r.id})">View</button>
+    </div>
+  `).join("") || "<p class='card-description' style='margin-top:15px'>No saved reflections yet.</p>";
+}
+
+function viewReflection(id) {
+  const r=data.reflections.find(x=>x.id===id);
+  if(!r) return;
+
+  const labels=[
+    "What did you learn?",
+    "What difficulties did you experience?",
+    "Which parts need improvement?",
+    "How did feedback help?",
+    "What will you do differently next time?"
+  ];
+
+  const detail=labels.map((l,i)=>
+    `<div style="margin-bottom:14px">
+      <strong style="font-size:11px">${l}</strong>
+      <p style="font-size:12px;line-height:1.7;margin-top:5px;color:#667168">${escapeHTML(r.answers[i])}</p>
+    </div>`
+  ).join("");
+
+  document.querySelector("#taskModal .modal-head h3").textContent="Saved Reflection";
+  document.querySelector("#taskModal form").innerHTML=`
+    <p class="card-description" style="margin-bottom:18px">${escapeHTML(r.date)}</p>
+    ${detail}
+    <button type="button" class="btn btn-primary" onclick="closeTaskModal();resetTaskModal()">Close</button>
+  `;
+
+  openTaskModal();
+}
+
+function resetTaskModal() {
+  document.querySelector("#taskModal .modal-head h3").textContent="Add New Assignment";
+  document.querySelector("#taskModal form").innerHTML=`
+    <div class="form-group">
+      <label>Assignment Title</label>
+      <input id="taskTitle" required placeholder="Example: Descriptive Text">
+    </div>
+    <div class="form-group">
+      <label>Assignment Description</label>
+      <textarea id="taskDescription" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Assignment Type</label>
+      <select id="taskType">
+        <option>Document</option><option>Presentation</option>
+        <option>Video</option><option>Audio</option><option>Image</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Upload Assignment</label>
+      <input type="file" id="taskFile" required>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit Assignment</button>
+  `;
+  document.querySelector("#taskModal form").onsubmit=saveTask;
+}
+
+/* ===================================
+   MY JOURNEY
+=================================== */
+
+function renderJourney() {
+  const taskCount=data.tasks.length;
+  const commentCount=data.tasks.reduce((s,t)=>s+(t.comments||0),0);
+  const revisionCount=data.revisions.length;
+  const reflectionCount=data.reflections.length;
+
+  document.getElementById("journeyTasks").textContent=taskCount;
+  document.getElementById("journeyComments").textContent=commentCount;
+  document.getElementById("journeyRevisions").textContent=revisionCount;
+  document.getElementById("journeyReflections").textContent=reflectionCount;
+
+  const stages=[
+    taskCount>0,
+    commentCount>0,
+    revisionCount>0,
+    reflectionCount>0,
+    taskCount>0 && revisionCount>0 && reflectionCount>0
+  ];
+
+  const completed=stages.filter(Boolean).length;
+  const percentage=Math.round(completed/5*100);
+
+  document.getElementById("overallProgress").style.width=percentage+"%";
+  document.getElementById("progressText").textContent=
+    completed+" of 5 learning stages completed · "+percentage+"%";
+
+  renderScoreChart();
+  renderAchievements(stages);
+  renderTimeline();
+}
+
+function renderScoreChart() {
+  const valid=data.revisions.filter(r=>
+    r.oldScore!==null && r.newScore!==null
+  );
+
+  const container=document.getElementById("scoreComparison");
+
+  if(!valid.length) {
+    container.innerHTML=`
+      <p class="card-description">
+        Score comparisons will appear when you submit revisions with assessment scores.
+      </p>`;
+    document.getElementById("scoreChart").innerHTML=
+      `<text x="20" y="35" fill="#879189" font-size="11">No score data available yet.</text>`;
+    return;
+  }
+
+  container.innerHTML=valid.map(r=>{
+    const task=data.tasks.find(t=>t.id===r.taskId);
+    const difference=r.newScore-r.oldScore;
+
+    return `
+      <div style="padding:13px 0;border-bottom:1px solid var(--border)">
+        <div style="font-size:12px;font-weight:800;margin-bottom:9px">
+          ${escapeHTML(task?.title||"Assignment")}
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <span class="tag tag-gray">Original: ${r.oldScore}</span>
+          <span style="color:var(--muted)">→</span>
+          <span class="tag tag-green">Revised: ${r.newScore}</span>
+          <strong style="font-size:12px;color:${difference>=0?'#547b61':'#c87970'}">
+            ${difference>0?"+":""}${difference} points
+          </strong>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  const svg=document.getElementById("scoreChart");
+  const width=700;
+  const height=210;
+  const left=45;
+  const right=670;
+  const top=20;
+  const bottom=170;
+
+  const xStep=valid.length===1?0:(right-left)/(valid.length-1);
+  const y=value=>bottom-(value/100)*(bottom-top);
+
+  let grid="";
+  [0,25,50,75,100].forEach(v=>{
+    grid+=`
+      <line x1="${left}" y1="${y(v)}" x2="${right}" y2="${y(v)}"
+        stroke="#edf0ea" stroke-width="1"/>
+      <text x="12" y="${y(v)+4}" font-size="10" fill="#98a198">${v}</text>
+    `;
+  });
+
+  let pointsOld="",pointsNew="",dots="";
+
+  valid.forEach((r,i)=>{
+    const x=valid.length===1?350:left+i*xStep;
+    pointsOld+=`${x},${y(r.oldScore)} `;
+    pointsNew+=`${x},${y(r.newScore)} `;
+
+    dots+=`
+      <circle cx="${x}" cy="${y(r.oldScore)}" r="5" fill="#e9bd68"/>
+      <circle cx="${x}" cy="${y(r.newScore)}" r="5" fill="#547b61"/>
+      <text x="${x}" y="195" text-anchor="middle" font-size="9" fill="#879189">Work ${i+1}</text>
+    `;
+  });
+
+  svg.innerHTML=`
+    ${grid}
+    <polyline points="${pointsOld}" fill="none" stroke="#e9bd68"
+      stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <polyline points="${pointsNew}" fill="none" stroke="#547b61"
+      stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    ${dots}
+  `;
+}
+
+function renderAchievements(stages) {
+  const achievements=[
+    {icon:"🚩",name:"First Step",desc:"Submit your first assignment",unlocked:stages[0]},
+    {icon:"💬",name:"Feedback Seeker",desc:"Receive teacher feedback",unlocked:stages[1]},
+    {icon:"📝",name:"Revision Rookie",desc:"Submit your first revision",unlocked:stages[2]},
+    {icon:"✍️",name:"Reflective Learner",desc:"Save your first reflection",unlocked:stages[3]},
+    {icon:"🌱",name:"Growing Learner",desc:"Complete all four learning activities",unlocked:stages[0]&&stages[1]&&stages[2]&&stages[3]},
+    {icon:"⭐",name:"Consistent Explorer",desc:"Submit three assignments",unlocked:data.tasks.length>=3},
+    {icon:"🏅",name:"Revision Champion",desc:"Complete three revisions",unlocked:data.revisions.length>=3},
+    {icon:"🏆",name:"Journey Achiever",desc:"Complete your learning journey",unlocked:stages.every(Boolean)}
+  ];
+
+  document.getElementById("achievementGrid").innerHTML=
+    achievements.map(a=>`
+      <div class="achievement ${a.unlocked?"":"locked"}">
+        <div class="achievement-icon">${a.icon}</div>
+        <strong>${a.name}</strong>
+        <small>${a.desc}</small>
+        <div style="margin-top:9px">
+          <span class="tag ${a.unlocked?"tag-green":"tag-gray"}">
+            ${a.unlocked?"Unlocked":"Locked"}
+          </span>
+        </div>
+      </div>
+    `).join("");
+}
+
+function renderTimeline() {
+  const timeline=document.getElementById("journeyTimeline");
+
+  timeline.innerHTML=data.activities.map(a=>`
+    <div class="activity-row">
+      <div class="activity-icon">${escapeHTML(a.icon)}</div>
+      <div style="flex:1">
+        <strong>${escapeHTML(a.title)}</strong>
+        <small>${escapeHTML(a.detail)}</small>
+      </div>
+      <small style="white-space:nowrap">${escapeHTML(a.date)}</small>
+    </div>
+  `).join("") || "<p class='card-description'>Your activities will appear here.</p>";
+}
+
+/* ===================================
+   INITIALIZE
+=================================== */
+
+document.getElementById("taskModal").addEventListener("click",e=>{
+  if(e.target.id==="taskModal") closeTaskModal();
+});
+
+renderDashboard();
+
+</script>
+</body>
+</html>
